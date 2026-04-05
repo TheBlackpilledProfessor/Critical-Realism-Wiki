@@ -1,0 +1,72 @@
+/* Base Styles - Resets, scrollbar, cursor */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+  border-left: 1px solid #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+::-webkit-scrollbar-corner {
+  background: #000;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333 #000;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

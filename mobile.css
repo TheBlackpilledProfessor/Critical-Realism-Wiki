@@ -1,0 +1,104 @@
+/* Mobile Responsive Styles */
+
+@media (max-width: 600px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .footer {
+    margin-top: 30px;
+    padding: 20px 15px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 1.5em;
+  }
+
+  .hamburger-btn {
+    display: block;
+  }
+
+  .backup-controls {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin-top: 10px;
+    z-index: 100;
+    min-width: 200px;
+  }
+
+  .backup-controls.menu-open {
+    display: flex;
+  }
+
+  .backup-btn {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #333;
+  }
+
+  .backup-btn:last-child {
+    border-bottom: none;
+  }
+
+  .header {
+    position: relative;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-article h2 {
+    font-size: 1.5em;
+  }
+
+  .confirm-dialog {
+    padding: 25px;
+  }
+
+  .confirm-actions {
+    flex-direction: column-reverse;
+  }
+
+  .confirm-btn {
+    width: 100%;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .page-btn {
+    padding: 8px 14px;
+    font-size: 0.85em;
+  }
+
+  .page-number {
+    min-width: 36px;
+    padding: 6px 10px;
+    font-size: 0.85em;
+  }
+
+  .notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}

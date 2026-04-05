@@ -1,0 +1,10 @@
+switch(provider) {
+  case 'together':
+    return await this.togetherChat(messages, model, maxTokens, temperature);
+  // case 'openrouter':
+  //   return await this.openrouterChat(messages, model, maxTokens, temperature);
+  // case 'local':
+  //   return await this.localChat(messages, model, maxTokens, temperature);
+  default:
+    throw new Error(`Unknown provider: ${provider}`);
+}

@@ -1,0 +1,21 @@
+const response = await fetch(this.providers.together.endpoint, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`
+  },
+  body: JSON.stringify({
+    model: model,
+    messages: messages,
+    max_tokens: maxTokens,
+    temperature: temperature
+  })
+});
+
+if (!response.ok) {
+  const error = await response.text();
+  throw new Error(`Together.ai API error: ${error}`);
+}
+
+const data = await response.json();
+return data.choices[0].message.content;

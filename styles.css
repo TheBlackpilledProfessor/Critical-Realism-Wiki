@@ -1,0 +1,17 @@
+/* 
+ * This file has been split into smaller, more manageable CSS modules.
+ * All styles have been moved to the following files:
+ * 
+ * - base.css: Resets, scrollbar, cursor, animations
+ * - layout.css: Container, header, navigation
+ * - forms.css: Inputs, buttons, progress bars
+ * - articles.css: Article cards, list, pagination
+ * - modals.css: All modal components
+ * - components.css: Context menu, loading screen
+ * - mobile.css: Responsive media queries
+ *
+ * This file is kept for backwards compatibility but is no longer used.
+ * All new styles should be added to the appropriate module above.
+ */
+
+/* removed: all styles - see module files listed above */

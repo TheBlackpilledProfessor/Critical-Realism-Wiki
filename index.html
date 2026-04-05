@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Critical Realism Wiki</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="forms.css">
+  <link rel="stylesheet" href="articles.css">
+  <link rel="stylesheet" href="modals.css">
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="mobile.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+  <script src="utils.js"></script>
+  <script src="CategoryDetector.js"></script>
+  <script src="ArticlePromptsAcademic.js"></script>
+  <script src="ArticlePromptsCultural.js"></script>
+  <script src="ArticlePromptsPractical.js"></script>
+  <script src="ArticlePromptsSocial.js"></script>
+  <script src="ArticleSystemPrompts.js"></script>
+
+  <script src="ArticlePrompts.js"></script>
+  <script src="ArticleGenerator.js"></script>
+  <script src="AppState.js"></script>
+  <script src="AppHandlers.js"></script>
+  <script type="text/babel" src="LoadingScreen.js"></script>
+  <script src="AboutContentOverview.js"></script>
+  <script src="AboutContentArchitecture.js"></script>
+  <script src="AboutContentModes.js"></script>
+  <script src="AboutContentWorkflow.js"></script>
+  <script src="AboutContentMisc.js"></script>
+  <script src="AboutContent.js"></script>
+  <script type="text/babel" src="AboutSection.js"></script>
+  <script type="text/babel" src="AboutModal.js"></script>
+  <script type="text/babel" src="ContextMenu.js"></script>
+  <script type="text/babel" src="Notification.js"></script>
+  <script type="text/babel" src="SettingsModal.js"></script>
+  </head>
+<body>
+  <div id="root"></div>
+  <script>
+// Multi-provider AI integration
+window.aiProvider = {
+  async chat(messages) {
+    const provider = localStorage.getItem('ai_provider') || 'together';
+    
+    switch(provider) {
+      case 'together':
+        return await this.togetherChat(messages);
+      case 'openrouter':
+        return await this.openrouterChat(messages);
+      case 'local':
+        return await this.localChat(messages);
+      default:
+        throw new Error(`Unknown provider: ${provider}`);
+    }
+  },
+  
+  async togetherChat(messages) {
+    const apiKey = localStorage.getItem('together_api_key');
+    if (!apiKey) {
+      throw new Error('Together.ai API key not configured. Please add your API key in Settings.');
+    }
+
+    const response = await fetch('https://api.together.xyz/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo',
+        messages: messages,
+        max_tokens: 2048,
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Together.ai API error: ${error}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  },
+  
+  async openrouterChat(messages) {
+    const apiKey = localStorage.getItem('openrouter_api_key');
+    const model = localStorage.getItem('openrouter_model') || 'meta-llama/llama-3.1-70b-instruct';
+    
+    if (!apiKey) {
+      throw new Error('OpenRouter API key not configured. Please add your API key in Settings.');
+    }
+
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': window.location.href,
+        'X-Title': 'Critical Realism Analyzer'
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: messages,
+        max_tokens: 2048,
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`OpenRouter API error: ${error}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  },
+  
+  async localChat(messages) {
+    const endpoint = localStorage.getItem('local_llm_endpoint') || 'http://localhost:11434/v1/chat/completions';
+    const model = localStorage.getItem('local_llm_model') || 'llama3.1';
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: messages,
+        max_tokens: 2048,
+        temperature: 0.7
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Local LLM error: ${error}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  }
+};
+
+// Backwards compatibility
+window.togetherAI = window.aiProvider;
+
+window.sanitizeInput = function (s) {
+  if (typeof s !== 'string') return '';
+  return s.replace(/[<>]/g, '').replace(/javascript:/gi, '').replace(/on\w+\s*=/gi, '').trim().slice(0,500);
+};
+  </script>
+  <script type="text/babel" data-type="module" src="app.js"></script>
+  </script>
+</body>
+</html>
