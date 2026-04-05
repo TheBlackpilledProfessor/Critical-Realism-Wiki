@@ -2,8 +2,6 @@
 
 **Critical Realism Analyzer** is an open-source AI-powered topic analysis tool. Unlike rigid encyclopedias, it produces flowing, evidence-based, and engaging articles for any topic, applying the principles of critical realism to provide systemic and contextual insights.
 
-![Demo Screenshot](./assets/demo.png)
-
 ---
 
 ## Features
