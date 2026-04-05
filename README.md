@@ -116,12 +116,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ---
 
-## Demo & Screenshots
-
-![Demo](./assets/demo.gif)
-
----
-
 ## References
 
 All generated content uses reputable sources such as:
